@@ -251,4 +251,64 @@ if let firstNumber = Int("4") {
 /* ----------
  * 암시적 언래핑 옵셔널 Implicitly Unwrapped Optionals
  * ---------- */
+let possibleString: String? = "An optional string."
+let forcedString: String = possibleString! // 옵셔널을 강제 언래핑하여 값에 접근
+
+let assumedString: String! = "An implicitly unwrapped optional string."
+let implicitly: String = assumedString // 암시적으로 해제된 옵셔널을 사용하면 옵셔널이 아닌 것처럼 사용 가능
+
+let optionalString = assumedString
+
+// 암시적으로 언래핑된 옵셔널은 일반 옵셔널과 같은 방법으로 nil 체크 가능
+if assumedString != nil {
+    print(assumedString!)
+}
+
+// 옵셔널 바인딩과 함께 암시적으로 언래핑된 옵셔널은 단일 구문으로 해당 값을 확인하고 언래핑 가능
+if let definiteString = assumedString {
+    print(definiteString)
+}
+
+/* ----------
+ * 오류 처리 Error Handling
+ * ---------- */
+
+ // 해당 함수는 오류를 발생시킬 수 있으므로 호출할 때 표현식 앞에 try를 붙임
+ func canThrowAnError() throws {
+    //
+ }
+
+ do {
+    try canThrowAnError()
+ } catch {
+    // 오류가 발생하면 여기로 이동
+ }
+
+/* ----------
+ * 어설션 Assertions
+ * ---------- */
+ // 런타임 시 발생하는 동작
+
+let age = -3
+assert(age >= 0, "A person's age cannot be less than zero")
+assert(age >= 0)
+
+if age > 10 {
+    print("You can ride the roller-coaster or the ferris wheel.")
+} else if age >= 0 {
+    print("You can ride the ferris wheel.")
+} else {
+    assertionFailure("A person's age cannot be less than zero")
+}
+
+// 강제 전제조건 Forced Preconditions
+// 조건이 false일 가능성이 있을 때 사용
+
+var index = 1
+precondition(index > 0, "")
+
+/*
+역설과 전제조건의 차이점은 언제 체크되는지에 있습니다: 역설은 오직 디버그 빌드에서 체크되지만 전제조건은 디버그와 프로덕션 빌드에서 체크됩니다. 
+프로덕션 빌드일 때 역설 내부의 조건은 실행되지 않습니다. 이 의미는 프로덕션에서 성능의 영향이 없이 개발 단계에서 많은 양의 역설을 사용할 수 있다는 뜻입니다.
+*/
 
